@@ -1,5 +1,6 @@
 from Sources.AoE import AoE
 from Client import Client
+import mysql.connector
 
 class Scraper:
 
@@ -17,8 +18,23 @@ full_url = "https://ageofempires.fandom.com/wiki/Siege_weapons_(Age_of_Empires_I
 response = scraper.get(full_url)
 
 siege_units = AoE.format(response.content)
-
 siege_units = filter(None, siege_units)
 
+# Connect to server
+mysql = mysql.connector.connect(
+    host = "127.0.0.1",
+    user = "root",
+    password = "",
+    database = "scraper"
+)
+
+# Get a cursor
+cursor = mysql.cursor()
+
+
 for siege_unit in siege_units:
-    print(siege_unit.name)
+    sql = "INSERT INTO siege_weapons (name, hp) VALUES (%s, %s)"
+    val = (siege_unit.name, siege_unit.hp)
+    cursor.execute(sql, val)
+
+    mysql.commit()
