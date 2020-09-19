@@ -8,9 +8,10 @@ class Scraper:
         self.client = client
 
     def get(self, url):
-        self.client.get(url)
+        return self.client.get(url)
 
 
 scraper = Scraper(Client())
 fullUrl = "https://ageofempires.fandom.com/wiki/Siege_weapons_(Age_of_Empires_II)"
-scraper.get(fullUrl)
+response = scraper.get(fullUrl)
+print(response.text)
