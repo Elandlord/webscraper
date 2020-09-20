@@ -1,6 +1,6 @@
 from Sources.AoE import AoE
+from Database.Connector import Connector
 from Client import Client
-import mysql.connector
 
 class Scraper:
 
@@ -21,20 +21,5 @@ siege_units = AoE.format(response.content)
 siege_units = filter(None, siege_units)
 
 # Connect to server
-mysql = mysql.connector.connect(
-    host = "127.0.0.1",
-    user = "root",
-    password = "",
-    database = "scraper"
-)
-
-# Get a cursor
-cursor = mysql.cursor()
-
-
-for siege_unit in siege_units:
-    sql = "INSERT INTO siege_weapons (name, hp) VALUES (%s, %s)"
-    val = (siege_unit.name, siege_unit.hp)
-    cursor.execute(sql, val)
-
-    mysql.commit()
+connection = Connector.mysql_connect("127.0.0.1", "root", "", "scraper")
+AoE.insert(connection, siege_units)
