@@ -36,22 +36,23 @@ class AoE:
             fields = siege_unit.findAll('td')
             columns = [i.text for i in fields]
 
-            name = columns[0].strip().encode('ascii')
-            hp = columns[3].strip().encode('ascii')
-            attack = columns[4].strip().encode('ascii')
-            armor = columns[5].strip().encode('ascii')
-            pierce_armor = columns[6].strip().encode('ascii')
-            weapon_range = columns[7].strip().encode('ascii')
-            rate_of_fire = columns[8].strip().encode('ascii')
-            line_of_sight = columns[9].strip().encode('ascii')
-            speed = columns[10].strip().encode('ascii')
-            food_cost = columns[11].strip().encode('ascii')
-            wood_cost = columns[12].strip().encode('ascii')
-            gold_cost = columns[13].strip().encode('ascii')
-            train_time_in_seconds = columns[14].strip().encode('ascii')
-            no_of_civs_with_access = columns[15].strip().encode('ascii')
+            args = {
+                "name": Formatter.stripEncode(columns[0]),
+                "hp": Formatter.stripEncode(columns[3]),
+                "attack": Formatter.stripEncode(columns[4]),
+                "armor": Formatter.stripEncode(columns[5]),
+                "pierce_armor": Formatter.stripEncode(columns[6]),
+                "weapon_range": Formatter.stripEncode(columns[7]),
+                "rate_of_fire": Formatter.stripEncode(columns[8]),
+                "line_of_sight": Formatter.stripEncode(columns[9]),
+                "speed": Formatter.stripEncode(columns[10]),
+                "food_cost": Formatter.stripEncode(columns[11]),
+                "wood_cost": Formatter.stripEncode(columns[12]),
+                "gold_cost": Formatter.stripEncode(columns[13]),
+                "train_time_in_seconds": Formatter.stripEncode(columns[14]),
+                "no_of_civs_with_access": Formatter.stripEncode(columns[15])
+            }
 
-            if len(name) > 0:
-                data.append(SiegeWeapon(name, hp, attack, armor, pierce_armor, weapon_range, rate_of_fire, line_of_sight, speed, food_cost, wood_cost, gold_cost, train_time_in_seconds, no_of_civs_with_access))
+            data.append(SiegeWeapon(**args))
 
         return data

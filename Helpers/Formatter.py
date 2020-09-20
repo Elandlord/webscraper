@@ -3,6 +3,9 @@ from bs4 import BeautifulSoup
 class Formatter:
 
     @staticmethod
+    def stripEncode(string, encoding = 'ascii'):
+        return string.strip().encode(encoding)
+
+    @staticmethod
     def beautifyContent(content):
-        soup = BeautifulSoup(content, features="html.parser")
-        return soup
+        return BeautifulSoup(content, features="html.parser")
